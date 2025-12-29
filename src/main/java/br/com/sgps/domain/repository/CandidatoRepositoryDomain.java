@@ -5,10 +5,16 @@ import br.com.sgps.domain.valueobject.CandidatoId;
 import br.com.sgps.domain.valueobject.Email;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface CandidatoRepositoryDomain {
 
     boolean existeEmailCadastrado(Email email, CandidatoId id);
 
+    boolean existe(CandidatoId id);
+
+    void persistir(Candidato candidato);
+
+    Optional<Candidato> conusltarPorId(CandidatoId id);
 
 }

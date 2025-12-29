@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "candidato")
@@ -17,8 +18,7 @@ import java.time.LocalDate;
 public class CandidatoPersistenteEntity {
 
     @Id
-    @GeneratedValue(strategy  = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     @Column(nullable = false, length = 14, unique = true)
     private String cpf;
     @Column(nullable = false, length = 255)
