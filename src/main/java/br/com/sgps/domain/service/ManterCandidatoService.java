@@ -1,6 +1,7 @@
 package br.com.sgps.domain.service;
 
 import br.com.sgps.domain.entity.Candidato;
+import br.com.sgps.domain.exception.DocumentoEmUsoException;
 import br.com.sgps.domain.exception.EmailEmUsoException;
 import br.com.sgps.domain.exception.NegocioException;
 import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
+@DomainService
 @RequiredArgsConstructor
 public class ManterCandidatoService {
 
@@ -24,13 +26,19 @@ public class ManterCandidatoService {
                 dataNascimento);
 
         verificarEmailExistente(email, candidato.id());
+        verificarCpfExistente(candidato.cpf(), candidato.id());
         return candidato;
 
     }
 
-    private void verificarEmailExistente(Email email, CandidatoId id) throws EmailEmUsoException {
+    private void verificarEmailExistente(Email email, CandidatoId id) {
         if(candidatoRepositoryDomain.existeEmailCadastrado(email,id)){
             throw new EmailEmUsoException();
+        }
+    }
+    private void verificarCpfExistente(String cpf, CandidatoId id) {
+        if(candidatoRepositoryDomain.existeCpfCadastrado(cpf,id)){
+            throw new DocumentoEmUsoException();
         }
     }
 

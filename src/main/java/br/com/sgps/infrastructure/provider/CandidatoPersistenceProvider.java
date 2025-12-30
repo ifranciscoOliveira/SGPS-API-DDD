@@ -26,6 +26,11 @@ public class CandidatoPersistenceProvider implements CandidatoRepositoryDomain {
     }
 
     @Override
+    public boolean existeCpfCadastrado(String cpf, CandidatoId id) {
+        return candidatoPersistenceRepository.existCpfCadastrado(cpf, id.value());
+    }
+
+    @Override
     public boolean existe(CandidatoId id) {
         return candidatoPersistenceRepository.existsById(id.value());
     }

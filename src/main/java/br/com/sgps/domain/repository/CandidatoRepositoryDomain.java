@@ -10,6 +10,8 @@ public interface CandidatoRepositoryDomain {
 
     boolean existeEmailCadastrado(Email email, CandidatoId id);
 
+    boolean existeCpfCadastrado(String cpf, CandidatoId id);
+
     boolean existe(CandidatoId id);
 
     void persistir(Candidato candidato);

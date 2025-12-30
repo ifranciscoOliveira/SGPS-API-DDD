@@ -1,4 +1,4 @@
 package br.com.sgps.domain.exception;
 
-public class EmailEmUsoException extends Throwable {
+public class EmailEmUsoException extends RuntimeException {
 }
