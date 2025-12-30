@@ -17,12 +17,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CandidatoPersistenceProvider implements CandidatoRepositoryDomain {
 
-    private CandidatoPersistenceRepository candidatoPersistenceRepository;
+    private final CandidatoPersistenceRepository candidatoPersistenceRepository;
     private final CandidatoPersistenceEntityAssembler assembleCandidado;
 
     @Override
     public boolean existeEmailCadastrado(Email email, CandidatoId id) {
-        return candidatoPersistenceRepository.existEmailCadastrado(email.value(), id.value().toString());
+        return candidatoPersistenceRepository.existEmailCadastrado(email.value(), id.value());
     }
 
     @Override
@@ -44,9 +44,8 @@ public class CandidatoPersistenceProvider implements CandidatoRepositoryDomain {
 
     @Override
     public Optional<Candidato> conusltarPorId(CandidatoId id) {
-        assembleCandidado.fromDomain()
-        return candidatoPersistenceRepository.findById(id.value());
-
+        Optional<CandidatoPersistenteEntity> optonalCandidatoPersisteceRep = candidatoPersistenceRepository.findById(id.value());
+        return optonalCandidatoPersisteceRep.map(assembleCandidado::persistenceEntityToDoman);
     }
 
     private void salvar(Candidato candidato){

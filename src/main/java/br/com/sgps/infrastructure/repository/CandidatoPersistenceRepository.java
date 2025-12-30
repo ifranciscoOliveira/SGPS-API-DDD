@@ -14,5 +14,5 @@ public interface CandidatoPersistenceRepository  extends JpaRepository<Candidato
             FROM CandidatoPersistenteEntity c 
             where c.email = :email and (:id IS NULL or c.id <> :id)
             """)
-    boolean existEmailCadastrado(@Param("email") String email, @Param("id") String id);
+    boolean existEmailCadastrado(@Param("email") String email, @Param("id") UUID id);
 }

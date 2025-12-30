@@ -1,6 +1,8 @@
 package br.com.sgps.infrastructure.assembler;
 
 import br.com.sgps.domain.entity.Candidato;
+import br.com.sgps.domain.valueobject.CandidatoId;
+import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.infrastructure.entity.CandidatoPersistenteEntity;
 
 public class CandidatoPersistenceEntityAssembler {
@@ -13,6 +15,7 @@ public class CandidatoPersistenceEntityAssembler {
 
     public CandidatoPersistenteEntity merge(CandidatoPersistenteEntity candidatoPersistenteEntity,
                                             Candidato candidato){
+        candidatoPersistenteEntity.setId(candidato.id().value());
         candidatoPersistenteEntity.setCpf(candidato.cpf());
         candidatoPersistenteEntity.setNome(candidato.nome());
         candidatoPersistenteEntity.setEmail(candidato.email().value());
@@ -22,8 +25,15 @@ public class CandidatoPersistenceEntityAssembler {
     }
 
     public Candidato persistenceEntityToDoman(CandidatoPersistenteEntity candidatoPersistenteEntity){
-        Candidato candidato = new Candidato(candidatoPersistenteEntity.getId())
-        return null;
+        return Candidato.criarExistente()
+                .id(new CandidatoId(candidatoPersistenteEntity.getId()))
+                .nome(candidatoPersistenteEntity.getNome())
+                .cpf(candidatoPersistenteEntity.getCpf())
+                .email(new Email(candidatoPersistenteEntity.getEmail()))
+                .telefone(candidatoPersistenteEntity.getTelefone())
+                .dataNascimento(candidatoPersistenteEntity.getDataNascimento())
+                .build();
+
     }
 
 

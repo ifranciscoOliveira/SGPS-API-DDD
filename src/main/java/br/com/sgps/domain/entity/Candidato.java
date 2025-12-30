@@ -3,7 +3,7 @@ package br.com.sgps.domain.entity;
 import br.com.sgps.domain.exception.NegocioException;
 import br.com.sgps.domain.valueobject.CandidatoId;
 import br.com.sgps.domain.valueobject.Email;
-import lombok.SneakyThrows;
+import lombok.Builder;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -18,14 +18,15 @@ public class Candidato {
     private String telefone;
     private LocalDate dataNascimento;
 
+    @Builder(builderClassName = "CandidadoExistenteBuild",builderMethodName = "criarExistente")
     public Candidato(CandidatoId id, String cpf, String nome,
                      Email email, String telefone, LocalDate dataNascimento) throws NegocioException {
        this.setId(id);
        this.setCpf(cpf);
-       this.setNome(nome);
-       this.setEmail(email);
-       this.setTelefone(telefone);
-       this.setDataNascimento(dataNascimento);
+       this.alterarNome(nome);
+       this.alterarEmail(email);
+       this.alterarTelefone(telefone);
+       this.alterarDataNascimento(dataNascimento);
     }
 
     public static Candidato criarNovoCandidato(String cpf, String nome,
@@ -64,6 +65,37 @@ public class Candidato {
         return dataNascimento;
     }
 
+    public void alterarNome(String novoNome) {
+        Objects.requireNonNull(novoNome);
+        if (novoNome.equalsIgnoreCase(this.nome)) {
+            return;
+        }
+
+        this.nome = novoNome;
+    }
+    public void alterarTelefone(String novoTelefone) {
+        Objects.requireNonNull(novoTelefone);
+        if (novoTelefone.equalsIgnoreCase(this.telefone)) {
+            return;
+        }
+        this.telefone = novoTelefone;
+    }
+    public void alterarDataNascimento(LocalDate novaDataNascimento){
+        Objects.requireNonNull(novaDataNascimento);
+        validarMaiorDeIdade(novaDataNascimento);
+        this.dataNascimento = novaDataNascimento;
+    }
+
+    public void alterarEmail(Email novoEmail) {
+        Objects.requireNonNull(novoEmail);
+
+        if (novoEmail.equals(this.email)) {
+            return;
+        }
+
+        this.email = novoEmail;
+    }
+
     private void setId(CandidatoId id) {
         Objects.requireNonNull(id);
         this.id = id;
@@ -74,26 +106,6 @@ public class Candidato {
         this.cpf = cpf;
     }
 
-    private void setNome(String nome) {
-        Objects.requireNonNull(nome);
-        this.nome = nome;
-    }
-
-    private void setEmail(Email email) {
-        Objects.requireNonNull(email);
-        this.email = email;
-    }
-
-    private void setTelefone(String telefone) {
-        Objects.requireNonNull(telefone);
-        this.telefone = telefone;
-    }
-
-    private void setDataNascimento(LocalDate dataNascimento) throws NegocioException {
-        Objects.requireNonNull(dataNascimento);
-        validarMaiorDeIdade(dataNascimento);
-        this.dataNascimento = dataNascimento;
-    }
 
     private void validarMaiorDeIdade(LocalDate dataNascimento) throws NegocioException {
         LocalDate hoje = LocalDate.now();

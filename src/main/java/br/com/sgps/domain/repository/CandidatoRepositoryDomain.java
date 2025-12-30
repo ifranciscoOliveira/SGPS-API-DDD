@@ -5,7 +5,6 @@ import br.com.sgps.domain.valueobject.CandidatoId;
 import br.com.sgps.domain.valueobject.Email;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public interface CandidatoRepositoryDomain {
 
