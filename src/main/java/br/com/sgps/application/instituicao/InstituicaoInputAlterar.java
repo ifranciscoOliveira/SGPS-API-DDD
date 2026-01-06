@@ -1,0 +1,22 @@
+package br.com.sgps.application.instituicao;
+
+import br.com.sgps.domain.valueobject.Documento;
+import br.com.sgps.domain.valueobject.Email;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class InstituicaoInputAlterar {
+
+    private String nome;
+    private Documento cnpjCpf;
+    private String telefone;
+    private Email email;
+
+
+}

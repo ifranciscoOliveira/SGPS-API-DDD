@@ -2,11 +2,11 @@ package br.com.sgps.domain.service;
 
 
 import br.com.sgps.domain.entity.Candidato;
+import br.com.sgps.domain.exception.CandidatoNaoEncontratoException;
 import br.com.sgps.domain.exception.DocumentoEmUsoException;
 import br.com.sgps.domain.exception.EmailEmUsoException;
 import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
 import br.com.sgps.domain.valueobject.Email;
-import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,17 +16,19 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
-class ManterCandidatoServiceTest {
+class CandidatoServiceTest {
 
     @Mock
     private CandidatoRepositoryDomain candidatoRepositoryDomain;
 
     @InjectMocks
-    private ManterCandidatoService candidatoService;
+    private CandidatoService candidatoService;
 
     private Candidato criarCandidato(){
         return Candidato.criarNovoCandidato(
@@ -83,6 +85,43 @@ class ManterCandidatoServiceTest {
         Assertions.assertThat(exception).isNotNull();
     }
 
+    @Test
+    void deveAlterarComSucesso(){
+
+        Candidato candidato = criarCandidato();
+        Mockito.when(candidatoRepositoryDomain.conusltarPorId(candidato.id())).thenReturn(Optional.of(candidato));
+        Mockito.when(candidatoRepositoryDomain.existeEmailCadastrado(Mockito.any(),Mockito.any())).thenReturn(false);
+        Mockito.when(candidatoRepositoryDomain.existeCpfCadastrado(Mockito.any(), Mockito.any())).thenReturn(false);
+
+
+        Candidato candidatoAlterado = candidatoService.alterar(candidato.id(),"fulano de tal novo",
+                new Email("teste22@teste.com"),"8192234564",
+                LocalDate.of(1900,2,2));
+
+
+        Assertions.assertThat(candidato).isNotNull();
+        Assertions.assertThat(candidato.id().value()).isNotNull();
+        Assertions.assertThat(candidato.email()).isEqualTo(new Email("teste22@teste.com"));
+        assertEquals("fulano de tal novo", candidato.nome());
+        assertEquals("8192234564", candidato.telefone());
+        assertEquals(LocalDate.of(1900,2,2), candidato.dataNascimento());
+
+
+    }
+
+    @Test
+    void deveLancarErroNaoEncontratoNaAlteracao(){
+
+        Candidato candidato = criarCandidato();
+        Mockito.when(candidatoRepositoryDomain.conusltarPorId(candidato.id())).thenReturn(Optional.empty());
+
+        assertThrows(CandidatoNaoEncontratoException.class,
+                ()->candidatoService.alterar(candidato.id(),"fulano de tal novo",
+                new Email("teste22@teste.com"),"8192234564",
+                LocalDate.of(1900,2,2)));
+
+
+    }
 
 
 }

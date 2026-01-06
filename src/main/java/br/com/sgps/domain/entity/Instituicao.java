@@ -19,10 +19,10 @@ public class Instituicao {
     public Instituicao(InstituicaoId id, String nome, Documento cnpjCpf,
                        String telefone, Email email) {
         setId(id);
-        setNome(nome);
         setCnpjCpf(cnpjCpf);
-        setTelefone(telefone);
-        setEmail(email);
+        alterarNome(nome);
+        alterarTelefone(telefone);
+        alterarEmail(email);
     }
 
     public static Instituicao criarNovaInstituicao(String nome, Documento cnpjCpf,
@@ -54,14 +54,24 @@ public class Instituicao {
         return email;
     }
 
+    public void alterarTelefone(String telefone) {
+        Objects.requireNonNull(telefone);
+        this.telefone = telefone;
+    }
+
+    public void alterarEmail(Email email) {
+        Objects.requireNonNull(email);
+        this.email = email;
+    }
+
+    public void alterarNome(String nome) {
+        FieldValidations.requiresNonBlank(nome);
+        this.nome = nome;
+    }
+
     private void setId(InstituicaoId id) {
         Objects.requireNonNull(id);
         this.id = id;
-    }
-
-    private void setNome(String nome) {
-        FieldValidations.requiresNonBlank(nome);
-        this.nome = nome;
     }
 
     private void setCnpjCpf(Documento cnpjCpf) {
@@ -69,13 +79,8 @@ public class Instituicao {
         this.cnpjCpf = cnpjCpf;
     }
 
-    private void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
 
-    private void setEmail(Email email) {
-        this.email = email;
-    }
+
 
 
 }
