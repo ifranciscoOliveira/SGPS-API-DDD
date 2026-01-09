@@ -1,5 +1,6 @@
 package br.com.sgps.domain.entity;
 
+import br.com.sgps.domain.exception.NegocioException;
 import br.com.sgps.domain.valueobject.InstituicaoId;
 import br.com.sgps.domain.valueobject.VagaId;
 import lombok.Builder;
@@ -117,6 +118,14 @@ public class Vaga {
     public Integer limiteInscricoes() {
         return limiteInscricoes;
     }
+
+    public void validarPeriodoDeInscricaoParaVaga() {
+        LocalDate dataAtual = LocalDate.now();
+        if (dataAtual.isBefore(this.dataInicio) || dataAtual.isAfter(this.dataFim)) {
+            throw new NegocioException("Inscrições não estão abertas para esta vaga.");
+        }
+    }
+
 
     private void setId(VagaId id) {
         Objects.requireNonNull(id);

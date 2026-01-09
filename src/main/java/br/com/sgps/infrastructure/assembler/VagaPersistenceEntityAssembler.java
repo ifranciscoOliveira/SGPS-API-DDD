@@ -10,7 +10,7 @@ public class VagaPersistenceEntityAssembler {
 
 
     public VagaPersistenceEntity fromDomain(Vaga vaga){
-        return merge(new VagaPersistenceEntity(),vaga);
+        return merge(VagaPersistenceEntity.builder().build(), vaga);
     }
 
     public VagaPersistenceEntity merge(VagaPersistenceEntity vagaPersistenceEntity

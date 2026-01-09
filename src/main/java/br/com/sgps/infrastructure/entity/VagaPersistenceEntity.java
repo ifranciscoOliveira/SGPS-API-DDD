@@ -1,6 +1,7 @@
 package br.com.sgps.infrastructure.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "vaga")
 @Data
+@Builder
 public class VagaPersistenceEntity {
 
     @Id
