@@ -24,7 +24,7 @@ public class InscricaoPersistenceEntityAssembler {
                 .id(inscricao.candidatoId().value())
                 .build());
         inscricaoPersistenceEntity.setDataInscricao(inscricao.dataInscricao());
-        inscricaoPersistenceEntity.setAprovado(inscricao.aprovado());
+        inscricaoPersistenceEntity.setResultadoInscricao(inscricao.resultadoInscricao());
         inscricaoPersistenceEntity.setEtapaAtual(inscricao.etapaAtual());
 
         return inscricaoPersistenceEntity;
@@ -38,7 +38,7 @@ public class InscricaoPersistenceEntityAssembler {
                 .vagaId(new VagaId(
                         inscricaoPersistenceEntity.getVaga().getId()))
                 .dataInscricao(inscricaoPersistenceEntity.getDataInscricao())
-                .aprovado(inscricaoPersistenceEntity.getAprovado())
+                .resultadoInscricao(inscricaoPersistenceEntity.getResultadoInscricao())
                 .etapaAtual(inscricaoPersistenceEntity.getEtapaAtual())
                 .build();
     }

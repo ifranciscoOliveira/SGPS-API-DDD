@@ -1,6 +1,7 @@
 package br.com.sgps.infrastructure.entity;
 
 import br.com.sgps.domain.commons.EtapasEnum;
+import br.com.sgps.domain.commons.ResultadoInscricaoEnum;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class InscricaoPersistenceEntity {
     @Column(name ="etapa_atual")
     private EtapasEnum etapaAtual;
 
-    @Column(name ="aprovado")
-    private Boolean aprovado;
+    @Column(name ="resultado")
+    @Enumerated(EnumType.STRING)
+    private ResultadoInscricaoEnum resultadoInscricao;
 }

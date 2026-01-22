@@ -21,4 +21,15 @@ public class InscricaoApplicationService {
         inscricaoServiceDomain.realizarInscricao(candidatoId, vagaId);
     }
 
+    @Transactional
+    public void avancarProximaEtapaDaInscricao(UUID inscricaoId) {
+        var inscricao = inscricaoRepositoryDomain.consultarPorId(inscricaoId)
+                .orElseThrow(() -> new IllegalArgumentException("Inscrição não encontrada"));
+
+        inscricao.alterarParaProximaEtapa();
+
+        inscricaoRepositoryDomain.persistir(inscricao);
+    }
+
+
 }

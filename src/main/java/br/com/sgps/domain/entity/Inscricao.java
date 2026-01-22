@@ -1,6 +1,7 @@
 package br.com.sgps.domain.entity;
 
 import br.com.sgps.domain.commons.EtapasEnum;
+import br.com.sgps.domain.commons.ResultadoInscricaoEnum;
 import br.com.sgps.domain.exception.NegocioException;
 import br.com.sgps.domain.valueobject.CandidatoId;
 import br.com.sgps.domain.valueobject.InscricaoId;
@@ -23,7 +24,7 @@ public class Inscricao {
 
     private EtapasEnum etapaAtual;
 
-    private Boolean aprovado;
+    private ResultadoInscricaoEnum resultadoInscricao;
 
     private void setId(InscricaoId id) {
         Objects.requireNonNull(id);
@@ -44,11 +45,11 @@ public class Inscricao {
         Objects.requireNonNull(dataInscricao);
         this.dataInscricao = dataInscricao;
     }
-    private void setAprovado(Boolean aprovado) {
-        if(aprovado){
+    private void setResultadoInscricao(ResultadoInscricaoEnum resultadoInscricao) {
+        if(ResultadoInscricaoEnum.APROVADO.equals(resultadoInscricao)){
             validarEtapaFinal();
         }
-        this.aprovado = aprovado;
+        this.resultadoInscricao = resultadoInscricao;
     }
 
     private void validarEtapaFinal() {
@@ -64,13 +65,13 @@ public class Inscricao {
                      VagaId vagaId,
                      LocalDateTime dataInscricao,
                      EtapasEnum etapaAtual,
-                     Boolean aprovado) {
+                     ResultadoInscricaoEnum resultadoInscricao) {
         setId(id);
         setCandidatoId(candidatoId);
         setVagaId(vagaId);
         setDataInscricao(dataInscricao);
         alterarEtapaAtual(etapaAtual);
-        setAprovado(aprovado);
+        setResultadoInscricao(resultadoInscricao);
     }
 
     public static Inscricao criarNovaInscricao(CandidatoId candidatoId,
@@ -81,7 +82,7 @@ public class Inscricao {
                 vagaId,
                 LocalDateTime.now(),
                 EtapasEnum.INSCRITO,
-                null
+                ResultadoInscricaoEnum.EM_AVALIACAO
         );
     }
 
@@ -90,7 +91,7 @@ public class Inscricao {
                                              VagaId vagaId,
                                              LocalDateTime dataInscricao,
                                              EtapasEnum etapaAtual,
-                                             Boolean aprovado) {
+                                             ResultadoInscricaoEnum aprovado) {
         return new Inscricao(
                 id,
                 candidatoId,
@@ -124,16 +125,24 @@ public class Inscricao {
         return etapaAtual;
     }
 
+    public ResultadoInscricaoEnum resultadoInscricao() {
+        return resultadoInscricao;
+    }
+
     public Boolean aprovado() {
-        return aprovado;
+        return ResultadoInscricaoEnum.APROVADO.equals(resultadoInscricao);
+    }
+    public Boolean reprovado() {
+        return ResultadoInscricaoEnum.REPROVADO.equals(resultadoInscricao);
     }
     public void aprovar() {
         validarEtapaFinal();
-        setAprovado(true);
+        setResultadoInscricao(ResultadoInscricaoEnum.APROVADO);
     }
 
+
     public void reprovar() {
-        setAprovado(false);
+        setResultadoInscricao(ResultadoInscricaoEnum.REPROVADO);
     }
 
     public void alterarEtapaAtual(EtapasEnum novaEtapa) {
@@ -144,6 +153,9 @@ public class Inscricao {
     public void alterarParaProximaEtapa(){
         if(aprovado()){
             throw new NegocioException("Inscrição aprovada não pode avançar para próxima etapa");
+        }
+        if(reprovado()){
+            throw new NegocioException("Inscrição reprovada não pode avançar para próxima etapa");
         }
         EtapasEnum novaEtapa = Arrays.stream(EtapasEnum.values())
                 .filter(e -> e.getOrdem() == etapaAtual().getOrdem() + 1)
