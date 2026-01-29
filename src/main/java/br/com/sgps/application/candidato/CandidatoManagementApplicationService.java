@@ -7,9 +7,9 @@ import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
 import br.com.sgps.domain.service.CandidatoService;
 import br.com.sgps.domain.valueobject.CandidatoId;
 import br.com.sgps.domain.valueobject.Email;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -45,6 +45,13 @@ public class CandidatoManagementApplicationService {
 
         candidatoRepositoryDomain.persistir(candidatoAlterar);
 
+    }
+
+    @Transactional(readOnly = true)
+    public Candidato consultarPorId(CandidatoId id) {
+        Objects.requireNonNull(id);
+        return candidatoRepositoryDomain.conusltarPorId(id)
+                .orElseThrow(CandidatoNaoEncontratoException::new);
     }
 
 

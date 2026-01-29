@@ -135,6 +135,7 @@ public class Inscricao {
     public Boolean reprovado() {
         return ResultadoInscricaoEnum.REPROVADO.equals(resultadoInscricao);
     }
+
     public void aprovar() {
         validarEtapaFinal();
         setResultadoInscricao(ResultadoInscricaoEnum.APROVADO);

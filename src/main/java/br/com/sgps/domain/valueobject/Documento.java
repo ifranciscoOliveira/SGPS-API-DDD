@@ -30,7 +30,7 @@ public record Documento(String value) {
 
     private void validar(String valor) throws NegocioException {
         if (valor.length() != Tipo.CPF.getTamanho() && valor.length() != Tipo.CNPJ.getTamanho() ){
-            throw new NegocioException("CPF inválido");
+            throw new NegocioException("Documento inválido");
         }
 
     }
