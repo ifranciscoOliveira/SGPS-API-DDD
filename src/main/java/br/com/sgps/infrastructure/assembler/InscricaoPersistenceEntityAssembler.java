@@ -7,7 +7,9 @@ import br.com.sgps.domain.valueobject.VagaId;
 import br.com.sgps.infrastructure.entity.CandidatoPersistenteEntity;
 import br.com.sgps.infrastructure.entity.InscricaoPersistenceEntity;
 import br.com.sgps.infrastructure.entity.VagaPersistenceEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class InscricaoPersistenceEntityAssembler {
 
     public InscricaoPersistenceEntity fromDomain(Inscricao inscricao) {

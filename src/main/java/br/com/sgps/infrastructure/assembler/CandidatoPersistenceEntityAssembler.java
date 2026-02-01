@@ -4,7 +4,9 @@ import br.com.sgps.domain.entity.Candidato;
 import br.com.sgps.domain.valueobject.CandidatoId;
 import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.infrastructure.entity.CandidatoPersistenteEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CandidatoPersistenceEntityAssembler {
 
 

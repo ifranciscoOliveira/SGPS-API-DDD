@@ -5,7 +5,9 @@ import br.com.sgps.domain.valueobject.InstituicaoId;
 import br.com.sgps.domain.valueobject.VagaId;
 import br.com.sgps.infrastructure.entity.InstituicaoPersistenceEntity;
 import br.com.sgps.infrastructure.entity.VagaPersistenceEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class VagaPersistenceEntityAssembler {
 
 
