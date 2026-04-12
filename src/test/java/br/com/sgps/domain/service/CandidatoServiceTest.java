@@ -6,6 +6,7 @@ import br.com.sgps.domain.exception.CandidatoNaoEncontratoException;
 import br.com.sgps.domain.exception.DocumentoEmUsoException;
 import br.com.sgps.domain.exception.EmailEmUsoException;
 import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
+import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.print.Doc;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -32,7 +34,7 @@ class CandidatoServiceTest {
 
     private Candidato criarCandidato(){
         return Candidato.criarNovoCandidato(
-                "01474712345",
+                new Documento("573.049.640-06"),
                 "Fulano de tal",
                 new Email("teste@teste.com"),
                 "9182234943",
@@ -46,7 +48,7 @@ class CandidatoServiceTest {
         Mockito.when(candidatoRepositoryDomain.existeEmailCadastrado(Mockito.any(),Mockito.any())).thenReturn(false);
         Mockito.when(candidatoRepositoryDomain.existeCpfCadastrado(Mockito.any(), Mockito.any())).thenReturn(false);
 
-        Candidato candidato = candidatoService.salvar("000022233","fulano de tal",
+        Candidato candidato = candidatoService.salvar( new Documento("573.049.640-06"),"fulano de tal",
                 new Email("teste@teste.com"),"8192234564",
                 LocalDate.of(1900,5,5));
 
@@ -62,7 +64,7 @@ class CandidatoServiceTest {
         Mockito.when(candidatoRepositoryDomain.existeEmailCadastrado(Mockito.any(),Mockito.any())).thenReturn(true);
 
         Exception exception = assertThrows(EmailEmUsoException.class, ()->{
-            candidatoService.salvar("000022233","fulano de tal",
+            candidatoService.salvar( new Documento("573.049.640-06"),"fulano de tal",
                     new Email("teste@teste.com"),"8192234564",
                     LocalDate.of(1900,5,5));
         });
@@ -77,7 +79,7 @@ class CandidatoServiceTest {
         Mockito.when(candidatoRepositoryDomain.existeCpfCadastrado(Mockito.any(), Mockito.any())).thenReturn(true);
 
         DocumentoEmUsoException exception = assertThrows(DocumentoEmUsoException.class, ()->{
-            candidatoService.salvar("000022233","fulano de tal",
+            candidatoService.salvar( new Documento("573.049.640-06"),"fulano de tal",
                     new Email("teste@teste.com"),"8192234564",
                     LocalDate.of(1900,5,5));
         });

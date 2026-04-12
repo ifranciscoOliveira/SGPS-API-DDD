@@ -2,6 +2,7 @@ package br.com.sgps.domain.entity;
 
 import br.com.sgps.domain.exception.NegocioException;
 import br.com.sgps.domain.valueobject.CandidatoId;
+import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import lombok.Builder;
 
@@ -11,15 +12,16 @@ import java.util.Objects;
 
 public class Candidato {
 
+
     private CandidatoId id;
-    private String cpf;
+    private Documento cpf;
     private String nome;
     private Email email;
     private String telefone;
     private LocalDate dataNascimento;
 
     @Builder(builderClassName = "CandidadoExistenteBuild",builderMethodName = "criarExistente")
-    public Candidato(CandidatoId id, String cpf, String nome,
+    public Candidato(CandidatoId id, Documento cpf, String nome,
                      Email email, String telefone, LocalDate dataNascimento) throws NegocioException {
        this.setId(id);
        this.setCpf(cpf);
@@ -29,7 +31,7 @@ public class Candidato {
        this.alterarDataNascimento(dataNascimento);
     }
 
-    public static Candidato criarNovoCandidato(String cpf, String nome,
+    public static Candidato criarNovoCandidato(Documento cpf, String nome,
                                                 Email email, String telefone, LocalDate dataNascimento) throws NegocioException {
         return new Candidato(
                 new CandidatoId(),
@@ -45,7 +47,7 @@ public class Candidato {
         return id;
     }
 
-    public String cpf() {
+    public Documento cpf() {
         return cpf;
     }
 
@@ -101,7 +103,7 @@ public class Candidato {
         this.id = id;
     }
 
-    private void setCpf(String cpf) {
+    private void setCpf(Documento cpf) {
         Objects.requireNonNull(cpf);
         this.cpf = cpf;
     }

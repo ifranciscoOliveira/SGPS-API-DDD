@@ -2,6 +2,7 @@ package br.com.sgps.infrastructure.assembler;
 
 import br.com.sgps.domain.entity.Candidato;
 import br.com.sgps.domain.valueobject.CandidatoId;
+import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.infrastructure.entity.CandidatoPersistenteEntity;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ public class CandidatoPersistenceEntityAssembler {
     public CandidatoPersistenteEntity merge(CandidatoPersistenteEntity candidatoPersistenteEntity,
                                             Candidato candidato){
         candidatoPersistenteEntity.setId(candidato.id().value());
-        candidatoPersistenteEntity.setCpf(candidato.cpf());
+        candidatoPersistenteEntity.setCpf(candidato.cpf().value());
         candidatoPersistenteEntity.setNome(candidato.nome());
         candidatoPersistenteEntity.setEmail(candidato.email().value());
         candidatoPersistenteEntity.setTelefone(candidato.telefone());
@@ -30,7 +31,7 @@ public class CandidatoPersistenceEntityAssembler {
         return Candidato.criarExistente()
                 .id(new CandidatoId(candidatoPersistenteEntity.getId()))
                 .nome(candidatoPersistenteEntity.getNome())
-                .cpf(candidatoPersistenteEntity.getCpf())
+                .cpf(new Documento(candidatoPersistenteEntity.getCpf()))
                 .email(new Email(candidatoPersistenteEntity.getEmail()))
                 .telefone(candidatoPersistenteEntity.getTelefone())
                 .dataNascimento(candidatoPersistenteEntity.getDataNascimento())

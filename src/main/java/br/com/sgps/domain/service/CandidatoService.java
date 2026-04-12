@@ -7,6 +7,7 @@ import br.com.sgps.domain.exception.EmailEmUsoException;
 import br.com.sgps.domain.exception.NegocioException;
 import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
 import br.com.sgps.domain.valueobject.CandidatoId;
+import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +21,7 @@ public class CandidatoService {
 
     private  final CandidatoRepositoryDomain candidatoRepositoryDomain;
 
-    public Candidato salvar(String cpf, String nome,
+    public Candidato salvar(Documento cpf, String nome,
                             Email email, String telefone, LocalDate dataNascimento) throws EmailEmUsoException, NegocioException {
         Candidato candidato = Candidato.criarNovoCandidato(cpf,
                 nome,
@@ -29,7 +30,7 @@ public class CandidatoService {
                 dataNascimento);
 
         verificarEmailExistente(email, candidato.id());
-        verificarCpfExistente(candidato.cpf(), candidato.id());
+        verificarCpfExistente(candidato.cpf().value(), candidato.id());
         return candidato;
 
     }
@@ -40,7 +41,7 @@ public class CandidatoService {
         Candidato candidato = candidatoRepositoryDomain.conusltarPorId(id)
                 .orElseThrow(CandidatoNaoEncontratoException::new);
         verificarEmailExistente(email, candidato.id());
-        verificarCpfExistente(candidato.cpf(), candidato.id());
+        verificarCpfExistente(candidato.cpf().value(), candidato.id());
         candidato.alterarNome(nome);
         candidato.alterarEmail(email);
         candidato.alterarTelefone(telefone);

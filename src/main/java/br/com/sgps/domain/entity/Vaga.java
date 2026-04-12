@@ -4,6 +4,7 @@ import br.com.sgps.domain.exception.NegocioException;
 import br.com.sgps.domain.valueobject.InstituicaoId;
 import br.com.sgps.domain.valueobject.VagaId;
 import lombok.Builder;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -88,11 +89,13 @@ public class Vaga {
 
     public void alterarDataInicio(LocalDate dataInicio) {
         Objects.requireNonNull(dataInicio);
+        validarPeriodoInicioFim(dataInicio, this.dataFim);
         this.dataInicio = dataInicio;
     }
 
     public void alterarDataFim(LocalDate dataFim) {
         Objects.requireNonNull(dataFim);
+        validarPeriodoInicioFim(this.dataInicio, dataFim);
         this.dataFim = dataFim;
     }
 
@@ -123,6 +126,14 @@ public class Vaga {
         LocalDate dataAtual = LocalDate.now();
         if (dataAtual.isBefore(this.dataInicio) || dataAtual.isAfter(this.dataFim)) {
             throw new NegocioException("Inscrições não estão abertas para esta vaga.");
+        }
+    }
+
+    private void validarPeriodoInicioFim(LocalDate dataIncial, LocalDate dataFinal){
+        if(dataIncial != null && dataFinal != null) {
+            if (dataIncial.isAfter(dataFinal) ||  dataIncial.isEqual(dataFinal)) {
+                throw new NegocioException("Período Inválido");
+            }
         }
     }
 

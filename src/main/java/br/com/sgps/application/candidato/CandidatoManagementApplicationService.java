@@ -6,6 +6,7 @@ import br.com.sgps.domain.exception.EmailEmUsoException;
 import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
 import br.com.sgps.domain.service.CandidatoService;
 import br.com.sgps.domain.valueobject.CandidatoId;
+import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class CandidatoManagementApplicationService {
     public UUID criar(CandidateInput candidatoInput) throws EmailEmUsoException {
         Objects.requireNonNull(candidatoInput);
 
-        Candidato candidato = candidatoServiceDomain.salvar(candidatoInput.getCpf(),
+        Candidato candidato = candidatoServiceDomain.salvar(new Documento(candidatoInput.getCpf()),
                 candidatoInput.getNome(),new Email(candidatoInput.getEmail()),
                 candidatoInput.getTelefone(),candidatoInput.getDataNascimento());
 

@@ -2,6 +2,7 @@ package br.com.sgps.domain.repository;
 
 import br.com.sgps.domain.entity.Candidato;
 import br.com.sgps.domain.valueobject.CandidatoId;
+import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.infrastructure.assembler.CandidatoPersistenceEntityAssembler;
 import br.com.sgps.infrastructure.provider.CandidatoPersistenceProvider;
@@ -30,7 +31,7 @@ class CandidatoRepositoryDomainTestIT {
 
     private Candidato criarCandidato(){
         return Candidato.criarNovoCandidato(
-                "01474712345",
+                new Documento("573.049.640-06"),
                 "Fulano de tal",
                 new Email("teste@teste.com"),
                 "9182234943",

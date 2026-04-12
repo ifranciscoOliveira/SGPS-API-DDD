@@ -23,11 +23,38 @@ Esse repositório representa a **Etapa 2**: API com abordagem Domain Driven Desi
 
 ---
 
-## 🏗️ Arquitetura Inicial (Etapa 2)
+## 🧠 Arquitetura do Projeto (Etapa 2)
 
-A arquitetura inicial segue o padrão Domain Driven Design (DDD):
+O projeto segue os princípios de **DDD (Domain Driven Design)** e **Clean Architecture**, separando responsabilidades em quatro camadas principais.
 
-Infra-estrutura → Aplicação → Dominio
+```
+        ┌───────────────────────┐
+        │      Presentation     │
+        │  Controllers / API    │
+        └───────────┬───────────┘
+                    │
+        ┌───────────▼───────────┐
+        │      Application      │
+        │  UseCases / Services  │
+        └───────────┬───────────┘
+                    │
+        ┌───────────▼───────────┐
+        │        Domain         │
+        │ Entities / Rules      │
+        └───────────▲───────────┘
+                    │
+        ┌───────────┴───────────┐
+        │     Infrastructure     │
+        │ DB / JPA / Framework   │
+        └────────────────────────┘
+```
+
+### Camadas
+
+- **Presentation** → Controllers e entrada da API
+- **Application** → Orquestra os casos de uso
+- **Domain** → Regras de negócio
+- **Infrastructure** → Implementações técnicas (JPA, banco, etc.)
 
 ## 🚀 Tecnologias (Etapa 2)
 
