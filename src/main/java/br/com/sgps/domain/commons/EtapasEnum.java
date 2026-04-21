@@ -2,6 +2,8 @@ package br.com.sgps.domain.commons;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public enum EtapasEnum {
     INSCRITO(1, "Inscrito"),
@@ -21,5 +23,14 @@ public enum EtapasEnum {
 
     public boolean isFinal() {
         return this == AVALICACAO_FINAL;
+    }
+
+    public static EtapasEnum getPorOrdem(int ordem) {
+        for (EtapasEnum etapa : values()) {
+            if (etapa.ordem == ordem) {
+                return etapa;
+            }
+        }
+        return null;
     }
 }
