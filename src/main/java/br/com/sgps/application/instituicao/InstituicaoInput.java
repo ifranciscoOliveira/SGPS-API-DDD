@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class InstituicaoInput {
 
     private String nome;
-    private Documento cnpjCpf;
+    private String cnpjCpf;
     private String telefone;
-    private Email email;
+    private String email;
 }

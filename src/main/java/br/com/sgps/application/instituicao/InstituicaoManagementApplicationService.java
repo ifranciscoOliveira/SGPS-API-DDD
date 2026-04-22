@@ -1,7 +1,11 @@
 package br.com.sgps.application.instituicao;
 
+import br.com.sgps.domain.entity.Instituicao;
+import br.com.sgps.domain.exception.InstituicaoNaoEncontradoException;
 import br.com.sgps.domain.repository.InstituicaoRepositoryDomain;
 import br.com.sgps.domain.service.InstituicaoService;
+import br.com.sgps.domain.valueobject.Documento;
+import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.domain.valueobject.InstituicaoId;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,28 +21,38 @@ public class InstituicaoManagementApplicationService {
     public final InstituicaoRepositoryDomain instituicaoRepositoryDomain;
 
     @Transactional
-    public void criar(InstituicaoInput instituicaoInput){
+    public Instituicao criar(InstituicaoInput instituicaoInput){
         Objects.requireNonNull(instituicaoInput);
 
         var instituicao = instituicaoServiceDomain.salvar(instituicaoInput.getNome(),
-                instituicaoInput.getCnpjCpf(),
+                new Documento(instituicaoInput.getCnpjCpf()),
                 instituicaoInput.getTelefone(),
-                instituicaoInput.getEmail());
+                new Email(instituicaoInput.getEmail()));
+
 
         instituicaoRepositoryDomain.persistir(instituicao);
+
+        return instituicao;
     }
 
     @Transactional
-    public void alterar(InstituicaoId id, InstituicaoInput instituicaoInput){
+    public Instituicao alterar(InstituicaoId id, InstituicaoInput instituicaoInput){
 
         Objects.requireNonNull(id);
         Objects.requireNonNull(instituicaoInput);
         var instituicaoAlterar = instituicaoServiceDomain.alterar(id,
                 instituicaoInput.getNome(),
-                instituicaoInput.getCnpjCpf(),
+                new Documento(instituicaoInput.getCnpjCpf()),
                 instituicaoInput.getTelefone(),
-                instituicaoInput.getEmail());
+                new Email(instituicaoInput.getEmail()));
 
         instituicaoRepositoryDomain.persistir(instituicaoAlterar);
+
+        return instituicaoAlterar;
+    }
+
+
+    public Instituicao conusltarPorID(InstituicaoId id){
+        return instituicaoRepositoryDomain.conusltarPorId(id).orElseThrow(InstituicaoNaoEncontradoException::new);
     }
 }

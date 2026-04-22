@@ -3,8 +3,7 @@ package br.com.sgps.domain.service;
 import br.com.sgps.domain.entity.Instituicao;
 import br.com.sgps.domain.exception.DocumentoEmUsoException;
 import br.com.sgps.domain.exception.EmailEmUsoException;
-import br.com.sgps.domain.exception.IntituicaoNaoEncontradoException;
-import br.com.sgps.domain.exception.NegocioException;
+import br.com.sgps.domain.exception.InstituicaoNaoEncontradoException;
 import br.com.sgps.domain.repository.InstituicaoRepositoryDomain;
 import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
@@ -30,7 +29,7 @@ public class InstituicaoService {
     public Instituicao alterar(InstituicaoId id, String nome, Documento cpfCnpj,
                                String telefone, Email email){
 
-        Instituicao instituicao = instituicaoRepositoryDomain.conusltarPorId(id).orElseThrow(IntituicaoNaoEncontradoException::new);
+        Instituicao instituicao = instituicaoRepositoryDomain.conusltarPorId(id).orElseThrow(InstituicaoNaoEncontradoException::new);
 
         validarDocumentoEmailEmUso(instituicao);
         return instituicao;
