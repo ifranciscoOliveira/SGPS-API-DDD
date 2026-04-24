@@ -9,6 +9,7 @@ import br.com.sgps.infrastructure.repository.VagaPersistenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,12 +36,22 @@ public class VagaPersistenceProvider implements VagaRepositoryDomain {
     }
 
     @Override
-    public void persistir(Vaga vaga) {
+    public List<Vaga> consultarTodos() {
+        return vagaPersistenceRepository.findAll()
+                .stream()
+                .map(vagaPersistenceEntityAssembler::persistenceEntityToDomain)
+                .toList();
+    }
+
+    @Override
+    public Vaga persistir(Vaga vaga) {
         UUID id = vaga.id().value();
         vagaPersistenceRepository.findById(id)
                 .ifPresentOrElse((vagaEncontrada) ->
                         alterar(vaga, vagaEncontrada),
                         () -> salvar(vaga));
+
+        return vaga;
     }
 
     private void alterar(Vaga vaga, VagaPersistenceEntity vagaEncontrada) {

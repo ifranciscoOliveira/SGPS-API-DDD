@@ -4,6 +4,7 @@ import br.com.sgps.domain.validator.FieldValidations;
 import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.domain.valueobject.InstituicaoId;
+import lombok.Builder;
 
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ public class Instituicao {
     private String telefone;
     private Email email;
 
-
+    @Builder(builderClassName = "InstituicaoExistenteBuild", builderMethodName = "criarExistente")
     public Instituicao(InstituicaoId id, String nome, Documento cnpjCpf,
                        String telefone, Email email) {
         setId(id);

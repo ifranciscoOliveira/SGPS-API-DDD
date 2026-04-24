@@ -7,11 +7,13 @@ import br.com.sgps.domain.repository.InstituicaoRepositoryDomain;
 import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.domain.valueobject.InstituicaoId;
+import br.com.sgps.infrastructure.assembler.InstituicaoPersistenceEntityAssembler;
 import br.com.sgps.infrastructure.entity.InstituicaoPersistenceEntity;
 import br.com.sgps.infrastructure.repository.InstituicaoPersistenceRporitoy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,6 +22,7 @@ import java.util.UUID;
 public class InstituicaoPersistenceProvider implements InstituicaoRepositoryDomain {
 
     private final InstituicaoPersistenceRporitoy instituicaoPersistenceRporitoy;
+    private final InstituicaoPersistenceEntityAssembler instituicaoPersistenceEntityAssembler;
 
 
     @Override
@@ -39,7 +42,18 @@ public class InstituicaoPersistenceProvider implements InstituicaoRepositoryDoma
 
     @Override
     public Optional<Instituicao> conusltarPorId(InstituicaoId id) {
+        InstituicaoPersistenceEntity instituicaoRepository =
+                instituicaoPersistenceRporitoy.findById(id.value()).orElse(null);
+        if (instituicaoRepository != null) {
+            return Optional.of(instituicaoPersistenceEntityAssembler.toDomain(instituicaoRepository));
+        }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Instituicao> listarTdos() {
+        List<InstituicaoPersistenceEntity>  lista = instituicaoPersistenceRporitoy.findAll();
+        return instituicaoPersistenceEntityAssembler.persistenceEntityToDomain(lista);
     }
 
     @Override

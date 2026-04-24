@@ -3,7 +3,9 @@ package br.com.sgps.domain.repository;
 import br.com.sgps.domain.entity.Instituicao;
 import br.com.sgps.domain.entity.Vaga;
 import br.com.sgps.domain.valueobject.VagaId;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface VagaRepositoryDomain {
@@ -12,8 +14,10 @@ public interface VagaRepositoryDomain {
 
     boolean existe(VagaId id);
 
-    void persistir(Vaga vaga);
+    Vaga persistir(Vaga vaga);
 
     Optional<Vaga> conusltarPorId(VagaId id);
+
+    List<Vaga> consultarTodos();
 
 }

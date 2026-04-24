@@ -1,5 +1,6 @@
 package br.com.sgps.application.vaga;
 
+import br.com.sgps.domain.entity.Vaga;
 import br.com.sgps.domain.repository.VagaRepositoryDomain;
 import br.com.sgps.domain.service.VagaServiceDomain;
 import br.com.sgps.domain.valueobject.InstituicaoId;
@@ -7,6 +8,8 @@ import br.com.sgps.domain.valueobject.VagaId;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +20,7 @@ public class VagaApplicationService {
 
 
     @Transactional
-    public void criar(VagaInput vagaInput){
+    public Vaga criar(VagaInput vagaInput){
         var vaga = vagaServiceDomain.salvar(vagaInput.getTitulo(),
                 vagaInput.getDescricao(),
                 vagaInput.getDataInicio(),
@@ -28,11 +31,11 @@ public class VagaApplicationService {
                 new InstituicaoId(vagaInput.getInstituicaoId())
         );
 
-        vagaRepositoryDomain.persistir(vaga);
+        return vagaRepositoryDomain.persistir(vaga);
     }
 
     @Transactional
-    public void alterar(VagaId id,VagaAlterarInput vagaAlterarInput){
+    public Vaga alterar(VagaId id,VagaAlterarInput vagaAlterarInput){
         var vagaAlterar = vagaServiceDomain.alterar(
                 id,
                 vagaAlterarInput.getTitulo(),
@@ -43,6 +46,10 @@ public class VagaApplicationService {
                 vagaAlterarInput.getStatus(),
                 vagaAlterarInput.getObservacao(),
                 new InstituicaoId(vagaAlterarInput.getInstituicaoId()));
-        vagaRepositoryDomain.persistir(vagaAlterar);
+        return vagaRepositoryDomain.persistir(vagaAlterar);
+    }
+
+    public List<Vaga> consultarTodos(){
+        return vagaRepositoryDomain.consultarTodos();
     }
 }

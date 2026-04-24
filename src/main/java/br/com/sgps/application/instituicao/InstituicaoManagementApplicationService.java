@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -54,5 +55,9 @@ public class InstituicaoManagementApplicationService {
 
     public Instituicao conusltarPorID(InstituicaoId id){
         return instituicaoRepositoryDomain.conusltarPorId(id).orElseThrow(InstituicaoNaoEncontradoException::new);
+    }
+
+    public List<Instituicao> consultarTodos(){
+        return instituicaoRepositoryDomain.listarTdos();
     }
 }
