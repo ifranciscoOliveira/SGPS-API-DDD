@@ -18,7 +18,7 @@ public class InscricaoApplicationService {
 
     @Transactional
     public void inscreverCandidatoEmVaga(UUID candidatoId, UUID vagaId) {
-        inscricaoServiceDomain.realizarInscricao(candidatoId, vagaId);
+        inscricaoServiceDomain.realizarInscricao(vagaId,candidatoId);
     }
 
     @Transactional

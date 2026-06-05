@@ -32,7 +32,9 @@ public class VagaPersistenceProvider implements VagaRepositoryDomain {
 
     @Override
     public Optional<Vaga> conusltarPorId(VagaId id) {
-        return Optional.empty();
+        Optional<VagaPersistenceEntity> vagaPersistenceEntity = vagaPersistenceRepository.findById(id.value());
+        return Optional.of(vagaPersistenceEntityAssembler.persistenceEntityToDomain(vagaPersistenceEntity.orElse(null)));
+
     }
 
     @Override

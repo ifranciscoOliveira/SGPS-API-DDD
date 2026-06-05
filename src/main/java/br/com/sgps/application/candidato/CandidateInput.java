@@ -1,5 +1,6 @@
 package br.com.sgps.application.candidato;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,6 @@ public class CandidateInput {
     private String cpf;
     private String telefone;
     private String email;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 }

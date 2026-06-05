@@ -1,6 +1,7 @@
 package br.com.sgps.application.vaga;
 
 import br.com.sgps.domain.valueobject.InstituicaoId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,9 @@ public class VagaInput {
 
     private String titulo;
     private String descricao;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataInicio;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFim;
     private Integer limiteInscricoes;
     private String status;

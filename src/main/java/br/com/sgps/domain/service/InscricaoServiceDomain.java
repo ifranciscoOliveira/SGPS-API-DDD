@@ -1,6 +1,8 @@
 package br.com.sgps.domain.service;
 
+import br.com.sgps.domain.entity.Candidato;
 import br.com.sgps.domain.entity.Inscricao;
+import br.com.sgps.domain.exception.CandidatoNaoEncontratoException;
 import br.com.sgps.domain.exception.VagaNaoEncontradaException;
 import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
 import br.com.sgps.domain.repository.InscricaoRepositoryDomain;
@@ -26,8 +28,8 @@ public class InscricaoServiceDomain {
         Inscricao inscricao = Inscricao.criarNovaInscricao(new CandidatoId(idCandidato)
                 , new VagaId(idVaga));
 
-        if(candidatoRepositoryDomain.existe(inscricao.candidatoId())){
-            throw new VagaNaoEncontradaException("Candidato não encontrado.");
+        if(!candidatoRepositoryDomain.existe(inscricao.candidatoId())){
+            throw new CandidatoNaoEncontratoException("Candidato não encontrado.");
         }
         var vaga = vagaRepositoryDomain.conusltarPorId(inscricao.vagaId())
                 .orElseThrow(() -> new VagaNaoEncontradaException("Vaga não encontrada."));

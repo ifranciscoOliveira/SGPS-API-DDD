@@ -10,6 +10,7 @@ import br.com.sgps.infrastructure.repository.CandidatoPersistenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -53,6 +54,12 @@ public class CandidatoPersistenceProvider implements CandidatoRepositoryDomain {
         return optonalCandidatoPersisteceRep.map(assembleCandidado::persistenceEntityToDoman);
     }
 
+    @Override
+    public List<Candidato> consultarTodos() {
+        List<CandidatoPersistenteEntity> candidatoPersistenteEntities = candidatoPersistenceRepository.findAll();
+        return candidatoPersistenteEntities.stream().map(assembleCandidado::persistenceEntityToDoman).toList();
+    }
+
     private void salvar(Candidato candidato){
 
         CandidatoPersistenteEntity persistenteEntity = assembleCandidado.fromDomain(candidato);
@@ -63,6 +70,7 @@ public class CandidatoPersistenceProvider implements CandidatoRepositoryDomain {
         candidatoPersistenteEntity = assembleCandidado.merge(candidatoPersistenteEntity,candidato);
         candidatoPersistenceRepository.saveAndFlush(candidatoPersistenteEntity);
     }
+
 
 
 

@@ -4,6 +4,7 @@ import br.com.sgps.domain.entity.Candidato;
 import br.com.sgps.domain.valueobject.CandidatoId;
 import br.com.sgps.domain.valueobject.Email;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CandidatoRepositoryDomain {
@@ -18,4 +19,5 @@ public interface CandidatoRepositoryDomain {
 
     Optional<Candidato> conusltarPorId(CandidatoId id);
 
+    List<Candidato> consultarTodos();
 }

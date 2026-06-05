@@ -20,7 +20,7 @@ public class CandidatoOutPut {
         return CandidatoOutPut.builder()
                 .id(candidato.id().toString())
                 .nome(candidato.nome())
-                .email(candidato.email().toString())
+                .email(candidato.email().value())
                 .telefone(candidato.telefone())
                 .build();
     }

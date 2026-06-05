@@ -20,7 +20,8 @@ public class VagaController {
     public List<VagaOutPut> consultarTodos(){
         return vagaApplicationService.consultarTodos()
                 .stream()
-                .map(VagaOutPut::new)
+                .map(vagaAssembler::domainToOutPut
+                )
                 .toList();
     }
 

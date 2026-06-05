@@ -1,7 +1,9 @@
 package br.com.sgps.application.vaga;
 
 import br.com.sgps.domain.entity.Vaga;
+import org.springframework.stereotype.Component;
 
+@Component
 public class VagaAssembler {
 
     public VagaOutPut domainToOutPut(Vaga vaga){

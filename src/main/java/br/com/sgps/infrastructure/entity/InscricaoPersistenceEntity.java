@@ -3,8 +3,10 @@ package br.com.sgps.infrastructure.entity;
 import br.com.sgps.domain.commons.EtapasEnum;
 import br.com.sgps.domain.commons.ResultadoInscricaoEnum;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,6 +15,8 @@ import java.util.UUID;
 @Table(name = "inscricao")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class InscricaoPersistenceEntity {
 
     @Id
