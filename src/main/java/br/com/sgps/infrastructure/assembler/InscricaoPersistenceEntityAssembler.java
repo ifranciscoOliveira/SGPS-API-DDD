@@ -23,7 +23,7 @@ public class InscricaoPersistenceEntityAssembler {
                 .id(inscricao.candidatoId().value())
                 .build());
         inscricaoPersistenceEntity.setVaga(VagaPersistenceEntity.builder()
-                .id(inscricao.candidatoId().value())
+                .id(inscricao.vagaId().value())
                 .build());
         inscricaoPersistenceEntity.setDataInscricao(inscricao.dataInscricao());
         inscricaoPersistenceEntity.setResultadoInscricao(inscricao.resultadoInscricao());
