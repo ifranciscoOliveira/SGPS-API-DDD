@@ -1,6 +1,7 @@
 package br.com.sgps.domain.service;
 
 import br.com.sgps.domain.entity.Vaga;
+import br.com.sgps.domain.exception.NegocioException;
 import br.com.sgps.domain.exception.VagaNaoEncontradaException;
 import br.com.sgps.domain.repository.InstituicaoRepositoryDomain;
 import br.com.sgps.domain.repository.VagaRepositoryDomain;
@@ -53,14 +54,14 @@ public class VagaServiceDomain {
 
     private void validarTituloEmUso(VagaId id, String titulo) {
         if(vagaRepositoryDomain.existeTituloCadastrado(titulo, id)){
-            throw new RuntimeException("Já existe uma vaga com o título informado.");
+            throw new NegocioException("Já existe uma vaga com o título informado.");
         }
     }
 
     private void validarInstituicaoExistente(InstituicaoId instituicaoId){
         Objects.requireNonNull(instituicaoId);
         if(!instituicaoRepositoryDomain.existe(instituicaoId)){
-            throw new RuntimeException("Instituição não encontrada com o ID: " + instituicaoId);
+            throw new NegocioException("Instituição não encontrada com o ID: " + instituicaoId);
         }
     }
 }
