@@ -1,16 +1,24 @@
 package br.com.sgps.infrastructure.provider;
 
 
+import br.com.sgps.application.instituicao.InstituicaoFiltro;
+import br.com.sgps.application.instituicao.InstituicaoOutPut;
+import br.com.sgps.domain.commons.Pagina;
+import br.com.sgps.domain.commons.Paginacao;
 import br.com.sgps.domain.entity.Instituicao;
 import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
 import br.com.sgps.domain.repository.InstituicaoRepositoryDomain;
 import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.domain.valueobject.InstituicaoId;
+import br.com.sgps.infrastructure.InstituicaoSpecification;
 import br.com.sgps.infrastructure.assembler.InstituicaoPersistenceEntityAssembler;
 import br.com.sgps.infrastructure.entity.InstituicaoPersistenceEntity;
 import br.com.sgps.infrastructure.repository.InstituicaoPersistenceRporitoy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -54,6 +62,28 @@ public class InstituicaoPersistenceProvider implements InstituicaoRepositoryDoma
     public List<Instituicao> listarTdos() {
         List<InstituicaoPersistenceEntity>  lista = instituicaoPersistenceRporitoy.findAll();
         return instituicaoPersistenceEntityAssembler.persistenceEntityToDomain(lista);
+    }
+
+    @Override
+    public Pagina<Instituicao> buscar(InstituicaoFiltro instituicaoFiltro, Paginacao paginacao) {
+
+        Pageable pageable =
+                PageRequest.of(
+                        paginacao.pagina(),
+                        paginacao.tamanho()
+                );
+
+
+        Page<Instituicao> page =   instituicaoPersistenceRporitoy
+                        .findAll(InstituicaoSpecification.filtrar(instituicaoFiltro),pageable)
+                        .map(instituicaoPersistenceEntityAssembler::toDomain);
+
+        return new Pagina<>(
+                page.getContent(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.getNumber()
+        );
     }
 
     @Override

@@ -1,12 +1,14 @@
 package br.com.sgps.apresentation.instituicao;
 
-import br.com.sgps.application.instituicao.InstituicaoInput;
-import br.com.sgps.application.instituicao.InstituicaoManagementApplicationService;
-import br.com.sgps.application.instituicao.InstituicaoOutPut;
-import br.com.sgps.application.instituicao.InstituicaoOutputAssembler;
+import br.com.sgps.application.instituicao.*;
+import br.com.sgps.domain.commons.Pagina;
+import br.com.sgps.domain.commons.Paginacao;
 import br.com.sgps.domain.entity.Instituicao;
 import br.com.sgps.domain.valueobject.InstituicaoId;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +28,21 @@ public class InstituicaoController {
                 .stream()
                 .map(instituicaoAssembler::toOutput)
                 .toList();
+    }
+
+    @GetMapping("/buscar")
+    public Pagina<InstituicaoOutPut> buscar(InstituicaoFiltro instituicaoFiltro, Pageable pageable){
+
+        Paginacao paginacao =
+                new Paginacao(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSort()
+                                .toString(),
+                        null
+                );
+
+        return instituicaoService.buscar(instituicaoFiltro, paginacao);
     }
 
     @PostMapping

@@ -1,5 +1,7 @@
 package br.com.sgps.application.instituicao;
 
+import br.com.sgps.domain.commons.Pagina;
+import br.com.sgps.domain.commons.Paginacao;
 import br.com.sgps.domain.entity.Instituicao;
 import br.com.sgps.domain.exception.InstituicaoNaoEncontradoException;
 import br.com.sgps.domain.repository.InstituicaoRepositoryDomain;
@@ -9,6 +11,8 @@ import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.domain.valueobject.InstituicaoId;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +63,10 @@ public class InstituicaoManagementApplicationService {
 
     public List<Instituicao> consultarTodos(){
         return instituicaoRepositoryDomain.listarTdos();
+    }
+
+    public Pagina<InstituicaoOutPut> buscar(InstituicaoFiltro instituicaoFiltro, Paginacao paginacao){
+        return instituicaoRepositoryDomain.buscar(instituicaoFiltro, paginacao)
+                .map(instituicao -> new InstituicaoOutPut(instituicao));
     }
 }
