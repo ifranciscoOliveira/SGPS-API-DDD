@@ -1,12 +1,12 @@
 package br.com.sgps.apresentation.candidato;
 
-import br.com.sgps.application.candidato.CandidateInput;
-import br.com.sgps.application.candidato.CandidatoAlterarInput;
-import br.com.sgps.application.candidato.CandidatoManagementApplicationService;
-import br.com.sgps.application.candidato.CandidatoOutPut;
+import br.com.sgps.application.candidato.*;
+import br.com.sgps.domain.commons.Pagina;
+import br.com.sgps.domain.commons.Paginacao;
 import br.com.sgps.domain.entity.Candidato;
 import br.com.sgps.domain.valueobject.CandidatoId;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +26,20 @@ public class CandidatoController {
                 .stream()
                 .map(CandidatoOutPut::fromDomain)
                 .toList();
+    }
+
+    @GetMapping("/buscar")
+    public Pagina<CandidatoOutPut> buscar(CandidatoFiltro candidatoFiltro, Pageable pageable) {
+
+        Paginacao paginacao = new Paginacao(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                pageable.getSort().toString(),
+                null
+        );
+
+        return  candidatoManagementApplicationService.buscar(candidatoFiltro, paginacao)
+                .map(CandidatoOutPut::fromDomain);
     }
 
 

@@ -2,12 +2,14 @@ package br.com.sgps.infrastructure.repository;
 
 import br.com.sgps.infrastructure.entity.VagaPersistenceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.UUID;
 
-public interface VagaPersistenceRepository  extends JpaRepository<VagaPersistenceEntity, UUID> {
+public interface VagaPersistenceRepository  extends JpaRepository<VagaPersistenceEntity, UUID>,
+        JpaSpecificationExecutor<VagaPersistenceEntity> {
 
     @Query("""
             SELECT CASE WHEN COUNT(v) > 0 THEN true ELSE false END

@@ -3,6 +3,7 @@ package br.com.sgps.apresentation.inscricao;
 
 import br.com.sgps.application.inscricao.InscricaoApplicationService;
 import br.com.sgps.application.inscricao.InscricaoInput;
+import br.com.sgps.application.inscricao.InscricoesInput;
 import br.com.sgps.domain.entity.Inscricao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,11 @@ public class InscricaoController {
                 ,UUID.fromString(inscricao.getIdVaga()));
     }
 
-    @PostMapping("/{idInscricao}/avancar-etapa")
-    public void avancarEtapaInscricao(@PathVariable String idInscricao) {
-        inscricaoApplicationService.avancarProximaEtapaDaInscricao(
-                UUID.fromString(idInscricao));
+    @PostMapping("/avancar-etapa")
+    public void avancarEtapaInscricao(@RequestBody InscricoesInput inscricoesInput) {
+        inscricoesInput.getIdsInscricoes().forEach(idInscricao ->
+            inscricaoApplicationService.avancarProximaEtapaDaInscricao(
+                UUID.fromString(idInscricao.toString()))
+        );
     }
 }

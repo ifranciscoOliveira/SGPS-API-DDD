@@ -1,8 +1,11 @@
 package br.com.sgps.apresentation.vaga;
 
 import br.com.sgps.application.vaga.*;
+import br.com.sgps.domain.commons.Pagina;
+import br.com.sgps.domain.commons.Paginacao;
 import br.com.sgps.domain.valueobject.VagaId;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +26,16 @@ public class VagaController {
                 .map(vagaAssembler::domainToOutPut
                 )
                 .toList();
+    }
+
+    @GetMapping("/buscar")
+    public Pagina<VagaOutPut> buscar(VagaFiltro vagaFiltro, Pageable pageable){
+
+        Paginacao paginacao  = new Paginacao(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort().toString(), null);
+
+
+        return vagaApplicationService.listar(vagaFiltro, paginacao)
+                .map(vagaAssembler::domainToOutPut);
     }
 
     @PostMapping

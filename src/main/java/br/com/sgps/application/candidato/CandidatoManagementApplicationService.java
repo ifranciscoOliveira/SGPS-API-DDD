@@ -1,5 +1,7 @@
 package br.com.sgps.application.candidato;
 
+import br.com.sgps.domain.commons.Pagina;
+import br.com.sgps.domain.commons.Paginacao;
 import br.com.sgps.domain.entity.Candidato;
 import br.com.sgps.domain.exception.CandidatoNaoEncontratoException;
 import br.com.sgps.domain.exception.EmailEmUsoException;
@@ -62,5 +64,12 @@ public class CandidatoManagementApplicationService {
     public List<Candidato> consultarTodos() {
         return candidatoRepositoryDomain.consultarTodos();
     }
+
+    @Transactional(readOnly = true)
+    public Pagina<Candidato> buscar(CandidatoFiltro candidatoFiltro, Paginacao paginacao) {
+        return candidatoRepositoryDomain.buscar(candidatoFiltro, paginacao);
+    }
+
+
 
 }

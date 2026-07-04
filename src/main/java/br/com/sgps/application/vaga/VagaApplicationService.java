@@ -1,5 +1,7 @@
 package br.com.sgps.application.vaga;
 
+import br.com.sgps.domain.commons.Pagina;
+import br.com.sgps.domain.commons.Paginacao;
 import br.com.sgps.domain.entity.Vaga;
 import br.com.sgps.domain.repository.VagaRepositoryDomain;
 import br.com.sgps.domain.service.VagaServiceDomain;
@@ -7,10 +9,12 @@ import br.com.sgps.domain.valueobject.InstituicaoId;
 import br.com.sgps.domain.valueobject.VagaId;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class VagaApplicationService {
@@ -51,5 +55,9 @@ public class VagaApplicationService {
 
     public List<Vaga> consultarTodos(){
         return vagaRepositoryDomain.consultarTodos();
+    }
+
+    public Pagina<Vaga> listar(VagaFiltro vagaFiltro, Paginacao paginacao){
+        return vagaRepositoryDomain.listar(vagaFiltro, paginacao);
     }
 }

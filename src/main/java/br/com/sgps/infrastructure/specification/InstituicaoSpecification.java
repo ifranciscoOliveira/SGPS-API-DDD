@@ -1,4 +1,4 @@
-package br.com.sgps.infrastructure;
+package br.com.sgps.infrastructure.specification;
 
 import br.com.sgps.application.instituicao.InstituicaoFiltro;
 import br.com.sgps.infrastructure.entity.InstituicaoPersistenceEntity;

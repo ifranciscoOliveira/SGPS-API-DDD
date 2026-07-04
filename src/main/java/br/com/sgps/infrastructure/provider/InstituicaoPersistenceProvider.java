@@ -2,16 +2,14 @@ package br.com.sgps.infrastructure.provider;
 
 
 import br.com.sgps.application.instituicao.InstituicaoFiltro;
-import br.com.sgps.application.instituicao.InstituicaoOutPut;
 import br.com.sgps.domain.commons.Pagina;
 import br.com.sgps.domain.commons.Paginacao;
 import br.com.sgps.domain.entity.Instituicao;
-import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
 import br.com.sgps.domain.repository.InstituicaoRepositoryDomain;
 import br.com.sgps.domain.valueobject.Documento;
 import br.com.sgps.domain.valueobject.Email;
 import br.com.sgps.domain.valueobject.InstituicaoId;
-import br.com.sgps.infrastructure.InstituicaoSpecification;
+import br.com.sgps.infrastructure.specification.InstituicaoSpecification;
 import br.com.sgps.infrastructure.assembler.InstituicaoPersistenceEntityAssembler;
 import br.com.sgps.infrastructure.entity.InstituicaoPersistenceEntity;
 import br.com.sgps.infrastructure.repository.InstituicaoPersistenceRporitoy;
