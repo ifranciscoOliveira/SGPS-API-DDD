@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.print.Doc;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -91,7 +90,7 @@ class CandidatoServiceTest {
     void deveAlterarComSucesso(){
 
         Candidato candidato = criarCandidato();
-        Mockito.when(candidatoRepositoryDomain.conusltarPorId(candidato.id())).thenReturn(Optional.of(candidato));
+        Mockito.when(candidatoRepositoryDomain.consultarPorId(candidato.id())).thenReturn(Optional.of(candidato));
         Mockito.when(candidatoRepositoryDomain.existeEmailCadastrado(Mockito.any(),Mockito.any())).thenReturn(false);
         Mockito.when(candidatoRepositoryDomain.existeCpfCadastrado(Mockito.any(), Mockito.any())).thenReturn(false);
 
@@ -115,7 +114,7 @@ class CandidatoServiceTest {
     void deveLancarErroNaoEncontratoNaAlteracao(){
 
         Candidato candidato = criarCandidato();
-        Mockito.when(candidatoRepositoryDomain.conusltarPorId(candidato.id())).thenReturn(Optional.empty());
+        Mockito.when(candidatoRepositoryDomain.consultarPorId(candidato.id())).thenReturn(Optional.empty());
 
         assertThrows(CandidatoNaoEncontratoException.class,
                 ()->candidatoService.alterar(candidato.id(),"fulano de tal novo",

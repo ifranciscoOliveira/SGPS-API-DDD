@@ -12,8 +12,6 @@ import br.com.sgps.domain.valueobject.Email;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Optional;
-import java.util.UUID;
 
 @DomainService
 @RequiredArgsConstructor
@@ -38,7 +36,7 @@ public class CandidatoService {
     public Candidato alterar(CandidatoId id, String nome,
                              Email email, String telefone, LocalDate dataNascimento) {
 
-        Candidato candidato = candidatoRepositoryDomain.conusltarPorId(id)
+        Candidato candidato = candidatoRepositoryDomain.consultarPorId(id)
                 .orElseThrow(CandidatoNaoEncontratoException::new);
         verificarEmailExistente(email, candidato.id());
         verificarCpfExistente(candidato.cpf().value(), candidato.id());

@@ -35,7 +35,7 @@ public class VagaServiceDomain {
                         InstituicaoId instituicaoId){
 
         validarInstituicaoExistente(instituicaoId);
-        Vaga vaga = vagaRepositoryDomain.conusltarPorId(id).orElseThrow(()->
+        Vaga vaga = vagaRepositoryDomain.consultarPorId(id).orElseThrow(()->
                 new VagaNaoEncontradaException("Vaga não encontrada com o ID: " + id));
 
         validarTituloEmUso(id, titulo);

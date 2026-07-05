@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -56,7 +55,7 @@ public class CandidatoManagementApplicationService {
     @Transactional(readOnly = true)
     public Candidato consultarPorId(CandidatoId id) {
         Objects.requireNonNull(id);
-        return candidatoRepositoryDomain.conusltarPorId(id)
+        return candidatoRepositoryDomain.consultarPorId(id)
                 .orElseThrow(CandidatoNaoEncontratoException::new);
     }
 

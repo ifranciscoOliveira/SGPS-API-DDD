@@ -2,6 +2,7 @@ package br.com.sgps.domain.service;
 
 import br.com.sgps.domain.entity.Candidato;
 import br.com.sgps.domain.entity.Inscricao;
+import br.com.sgps.domain.entity.Vaga;
 import br.com.sgps.domain.exception.CandidatoNaoEncontratoException;
 import br.com.sgps.domain.exception.VagaNaoEncontradaException;
 import br.com.sgps.domain.repository.CandidatoRepositoryDomain;
@@ -18,34 +19,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class InscricaoServiceDomain {
 
-    private final InscricaoRepositoryDomain inscricaoRepositoryDomain;
-    private final VagaRepositoryDomain vagaRepositoryDomain;
-    private final CandidatoRepositoryDomain candidatoRepositoryDomain;
 
-    public Inscricao realizarInscricao(UUID idVaga, UUID idCandidato) {
-        Objects.requireNonNull(idVaga);
-        Objects.requireNonNull(idCandidato);
-        Inscricao inscricao = Inscricao.criarNovaInscricao(new CandidatoId(idCandidato)
-                , new VagaId(idVaga));
-
-        if(!candidatoRepositoryDomain.existe(inscricao.candidatoId())){
-            throw new CandidatoNaoEncontratoException("Candidato não encontrado.");
-        }
-        var vaga = vagaRepositoryDomain.conusltarPorId(inscricao.vagaId())
-                .orElseThrow(() -> new VagaNaoEncontradaException("Vaga não encontrada."));
+    public Inscricao realizarInscricao(Vaga vaga, Candidato candidato) {
+        Objects.requireNonNull(vaga);
+        Objects.requireNonNull(candidato);
+        Inscricao inscricao = Inscricao.criarNovaInscricao(new CandidatoId(candidato.id().value())
+                , new VagaId(vaga.id().value()));
 
         vaga.validarPeriodoDeInscricaoParaVaga();
-        validarCandidatoJaInscritoParaVaga(inscricao);
 
-        inscricaoRepositoryDomain.persistir(inscricao);
 
-        return null;
+        return inscricao;
     }
 
-    private void validarCandidatoJaInscritoParaVaga(Inscricao inscricao) {
-        if(inscricaoRepositoryDomain.existeInscricaoPorCandidatoEPorVaga(inscricao.candidatoId().value()
-                , inscricao.vagaId().value())) {
-            throw new VagaNaoEncontradaException("Candidato já inscrito para essa vaga.");
-        }
-    }
 }

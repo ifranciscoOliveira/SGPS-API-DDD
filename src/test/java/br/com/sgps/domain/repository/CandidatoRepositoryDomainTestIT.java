@@ -46,7 +46,7 @@ class CandidatoRepositoryDomainTestIT {
 
         candidatoRepositoryDomain.persistir(candidato);
 
-        Candidato candidatoCadastrado = candidatoRepositoryDomain.conusltarPorId(new CandidatoId(id)).get();
+        Candidato candidatoCadastrado = candidatoRepositoryDomain.consultarPorId(new CandidatoId(id)).get();
         Assertions.assertThat(candidatoCadastrado.id().value()).isEqualTo(id);
 
     }
@@ -58,7 +58,7 @@ class CandidatoRepositoryDomainTestIT {
 
         candidatoRepositoryDomain.persistir(candidato);
 
-        Candidato candidatoCadastrado = candidatoRepositoryDomain.conusltarPorId(new CandidatoId(id)).get();
+        Candidato candidatoCadastrado = candidatoRepositoryDomain.consultarPorId(new CandidatoId(id)).get();
 
         candidatoCadastrado.alterarNome("novo nome");
         candidatoCadastrado.alterarTelefone("111111111");
@@ -66,7 +66,7 @@ class CandidatoRepositoryDomainTestIT {
         candidatoCadastrado.alterarDataNascimento(LocalDate.of(1986,10,10));
 
         candidatoRepositoryDomain.persistir(candidatoCadastrado);
-        Candidato candidatoAlterado = candidatoRepositoryDomain.conusltarPorId(new CandidatoId(id)).get();
+        Candidato candidatoAlterado = candidatoRepositoryDomain.consultarPorId(new CandidatoId(id)).get();
 
         Assertions.assertThat(id).isEqualTo(candidatoAlterado.id().value());
         Assertions.assertThat("novo nome").isEqualTo(candidatoAlterado.nome());

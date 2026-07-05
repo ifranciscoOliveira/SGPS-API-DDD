@@ -68,7 +68,7 @@ public class CandidatoPersistenceProvider implements CandidatoRepositoryDomain {
     }
 
     @Override
-    public Optional<Candidato> conusltarPorId(CandidatoId id) {
+    public Optional<Candidato> consultarPorId(CandidatoId id) {
         Optional<CandidatoPersistenteEntity> optonalCandidatoPersisteceRep = candidatoPersistenceRepository.findById(id.value());
         return optonalCandidatoPersisteceRep.map(assembleCandidado::persistenceEntityToDoman);
     }

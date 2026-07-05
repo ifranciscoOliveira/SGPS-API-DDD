@@ -22,7 +22,7 @@ public interface CandidatoRepositoryDomain {
 
     void persistir(Candidato candidato);
 
-    Optional<Candidato> conusltarPorId(CandidatoId id);
+    Optional<Candidato> consultarPorId(CandidatoId id);
 
     List<Candidato> consultarTodos();
 }
