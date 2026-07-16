@@ -6,9 +6,7 @@ import br.com.sgps.domain.commons.Paginacao;
 import br.com.sgps.domain.entity.Instituicao;
 import br.com.sgps.domain.valueobject.InstituicaoId;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,8 +57,8 @@ public class InstituicaoController {
     }
 
     @GetMapping("/{idInstituicao}")
-    public InstituicaoOutPut consultarPorId(@RequestParam String id){
-        Instituicao instituicao = instituicaoService.conusltarPorID(new InstituicaoId(UUID.fromString(id)));
+    public InstituicaoOutPut consultarPorId(@PathVariable String idInstituicao){
+        Instituicao instituicao = instituicaoService.conusltarPorID(new InstituicaoId(UUID.fromString(idInstituicao)));
 
         return new InstituicaoOutPut(instituicao);
     }
